@@ -1,0 +1,16 @@
+version: "3"
+services:
+  app:
+    #app_goの中にあるDockerfileの読み込み
+    build: ./
+    tty: true
+    ports:
+      - "3010:3010"
+    environment:
+      TZ: "Asia/Tokyo"
+      LANG: "ja_JP.utf8"
+      LC_ALL: "ja_JP.utf8"
+    #ホストのディレクトリをコンテナにマウント
+    volumes:
+      - ../app:/go/src/app
+    working_dir: /go/src/app
