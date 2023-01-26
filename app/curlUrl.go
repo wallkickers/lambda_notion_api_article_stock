@@ -5,6 +5,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"regexp"
 	"strings"
 )
 
@@ -20,7 +21,7 @@ func main() {
 	}
 
 	contentType := res.Header.Get("Content-Type")
-	if !strings.Contains(contentType, "utf") {
+	if !(strings.Contains(contentType, "utf") || (strings.Contains(contentType, "UTF"))) {
 		log.Fatal("Unexpected Content-Type:", contentType)
 	}
 
@@ -30,10 +31,12 @@ func main() {
 	}
 
 	siteTitle := ""
-	if strings.Contains(string(byteArray), "<title>") {
-		splitArray := strings.Split(string(byteArray), "<title>")
-		splitArray = strings.Split(splitArray[1], "</title>")
-		siteTitle = splitArray[0]
+	if strings.Contains(string(byteArray), "title") {
+		r := regexp.MustCompile(`<title.*?>(.*?)</title>`)
+		match := r.FindStringSubmatch(string(byteArray))
+		if len(match) > 1 {
+			siteTitle = match[1]
+		}
 	}
 	fmt.Println(siteTitle)
 }
