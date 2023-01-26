@@ -49,6 +49,8 @@ func handler(request events.APIGatewayProxyRequest) {
 	isApiSuccess := postNotionApiStockArticle(siteTitle, text)
 	if isApiSuccess {
 		postLineMessage(userid, text)
+	} else {
+		postLineMessage(userid, "記事の保存に失敗しました。")
 	}
 }
 
@@ -112,7 +114,9 @@ func postNotionApiStockArticle(siteTitle string, url string) bool {
 	fmt.Println("------------------------------------------")
 	fmt.Println(response)
 
-	// TODO: ステータスコードチェック 200以外ならreturn false
+	if response.StatusCode != 200 {
+		return false
+	}
 	return true
 }
 
