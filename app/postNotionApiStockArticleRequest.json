@@ -1,0 +1,22 @@
+{
+    "parent": { "database_id": "%NOTION_DATABASE_ID%" },
+    "properties": {
+      "title": {
+        "title": [
+          {
+            "text": {
+              "content": "%CONTENT%"
+            }
+          }
+        ]
+      },
+      "Status": {
+        "select": {
+            "name": "未読"
+        }
+      },
+      "URL": {
+        "url": "%SITEURL%"
+      }
+    }
+}
