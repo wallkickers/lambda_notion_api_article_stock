@@ -19,6 +19,11 @@ func main() {
 		log.Fatal("Unexpected Statuscode:", res.StatusCode)
 	}
 
+	contentType := res.Header.Get("Content-Type")
+	if !strings.Contains(contentType, "utf") {
+		log.Fatal("Unexpected Content-Type:", contentType)
+	}
+
 	byteArray, err := io.ReadAll(res.Body)
 	if err != nil {
 		fmt.Println(err)
