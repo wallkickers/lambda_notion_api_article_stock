@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"os"
 	"strings"
@@ -58,6 +59,10 @@ func httpGetUrl(url string) string {
 		fmt.Println(err)
 	}
 	defer res.Body.Close()
+
+	if res.StatusCode != http.StatusOK {
+		log.Fatal("Unexpected Statuscode:", res.StatusCode)
+	}
 
 	byteArray, err := io.ReadAll(res.Body)
 	if err != nil {
