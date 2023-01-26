@@ -76,7 +76,46 @@ func httpGetUrl(url string) string {
 
 // パラメータのタイトルとURLでNotionAPIを叩く
 func postNotionApiStockArticle(siteTitle string, url string) bool {
+	jsonBody, err := os.ReadFile("postNotionApiStockArticleRequest.json")
+	if err != nil {
+		fmt.Println(err)
+	}
+	relacedJsonBody := replaceParameter(string(jsonBody), siteTitle, url)
+
+	body := strings.NewReader(string(relacedJsonBody))
+	req, err := http.NewRequest("POST", "https://api.notion.com/v1/pages", body)
+	if err != nil {
+		fmt.Println(err)
+	}
+	req.Header.Set("Authorization", "Bearer "+os.Getenv("NOTION_KEY"))
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Notion-Version", "2022-06-28")
+
+	client := &http.Client{}
+	response, err := client.Do(req)
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer response.Body.Close()
+	fmt.Println("------------------------------------------")
+	fmt.Println(req)
+	fmt.Println("------------------------------------------")
+	fmt.Println(response)
+
+	// TODO: ステータスコードチェック 200以外ならreturn false
 	return true
+}
+
+func replaceParameter(jsonBody, content, url string) string {
+	replacement := map[string]string{
+		"%NOTION_DATABASE_ID%": os.Getenv("NOTION_DATABASE_ID"),
+		"%CONTENT%":            content,
+		"%SITEURL%":            url,
+	}
+	for key, value := range replacement {
+		jsonBody = strings.Replace(jsonBody, key, value, -1)
+	}
+	return jsonBody
 }
 
 func postLineMessage(userid string, text string) {
