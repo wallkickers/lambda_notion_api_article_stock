@@ -1,5 +1,5 @@
 FROM golang:1.19.1-alpine
-RUN apk update && apk --no-cache add bash git ca-certificates curl vim
+RUN apk update && apk --no-cache add bash git ca-certificates curl vim zip
 
 ENV CGO_ENABLED=0
 
