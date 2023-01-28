@@ -49,9 +49,9 @@ func handler(request events.APIGatewayProxyRequest) {
 	siteTitle := httpGetUrl(text)
 	isApiSuccess := postNotionApiStockArticle(siteTitle, text)
 	if isApiSuccess {
-		postLineMessage(userid, text)
+		postLineMessage(userid, "保存しました！")
 	} else {
-		postLineMessage(userid, "記事の保存に失敗しました。")
+		postLineMessage(userid, "保存に失敗しました...")
 	}
 }
 
