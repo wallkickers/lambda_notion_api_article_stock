@@ -6,6 +6,7 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"net/url"
 	"os"
 	"regexp"
 	"strings"
@@ -56,8 +57,11 @@ func handler(request events.APIGatewayProxyRequest) {
 }
 
 // パラメータのURLでcurlを叩き、サイトのタイトルを取得&返却
-func httpGetUrl(url string) string {
-	res, err := http.Get(url)
+func httpGetUrl(messageText string) string {
+	parseUrl, _ := url.Parse(messageText)
+	inputUrl := strings.Join(strings.Fields(parseUrl.String()), "")
+
+	res, err := http.Get(inputUrl)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -82,7 +86,7 @@ func httpGetUrl(url string) string {
 		r := regexp.MustCompile(`(?s)<title.*?>(.*?)</title>`)
 		match := r.FindStringSubmatch(string(byteArray))
 		if len(match) > 1 {
-			siteTitle = match[1]
+			siteTitle = strings.Join(strings.Fields(match[1]), "")
 		}
 	}
 	return siteTitle

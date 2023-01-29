@@ -5,12 +5,17 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"net/url"
 	"regexp"
 	"strings"
 )
 
 func main() {
-	res, err := http.Get("https://qiita.com/sayama0402/items/e32814e38375fafa919a")
+	messageText := "https://qiita.com/sayama0402/items/e32814e38375fafa919a"
+	parseUrl, _ := url.Parse(messageText)
+	inputUrl := strings.Join(strings.Fields(parseUrl.String()), "")
+
+	res, err := http.Get(inputUrl)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -35,7 +40,7 @@ func main() {
 		r := regexp.MustCompile(`(?s)<title.*?>(.*?)</title>`)
 		match := r.FindStringSubmatch(string(byteArray))
 		if len(match) > 1 {
-			siteTitle = match[1]
+			siteTitle = strings.Join(strings.Fields(match[1]), "")
 		}
 	}
 	fmt.Println(siteTitle)
