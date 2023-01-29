@@ -79,7 +79,7 @@ func httpGetUrl(url string) string {
 
 	siteTitle := ""
 	if strings.Contains(string(byteArray), "title") {
-		r := regexp.MustCompile(`<title.*?>(.*?)</title>`)
+		r := regexp.MustCompile(`(?s)<title.*?>(.*?)</title>`)
 		match := r.FindStringSubmatch(string(byteArray))
 		if len(match) > 1 {
 			siteTitle = match[1]
