@@ -9,7 +9,7 @@ GOOS=linux go build main.go
 # lambdaにソースをアップする方法
 appディレクトリ内のファイルを1つのzipファイルに圧縮してlambdaにアップします。
 
-# 参考記事
+# 開発時の参考記事
 - NotionAPIを使用するために必要になる「インテグレーション」について
     - [【NotionAPI 】インテグレーションが表示されない時の対処法](https://zenn.dev/syfut/articles/4906816e6e9118)
     - [私のインテグレーション](https://www.notion.so/my-integrations)
