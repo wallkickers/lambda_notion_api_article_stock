@@ -34,9 +34,6 @@ type Event struct {
 func handler(request events.APIGatewayProxyRequest) {
 	var event Event
 
-	fmt.Println(request)
-	fmt.Println(request.Body)
-
 	body := request.Body
 	res := Response{
 		RequestBody: body,
@@ -115,10 +112,6 @@ func postNotionApiStockArticle(siteTitle string, url string) bool {
 		fmt.Println(err)
 	}
 	defer response.Body.Close()
-	fmt.Println("------------------------------------------")
-	fmt.Println(req)
-	fmt.Println("------------------------------------------")
-	fmt.Println(response)
 
 	if response.StatusCode != 200 {
 		return false
