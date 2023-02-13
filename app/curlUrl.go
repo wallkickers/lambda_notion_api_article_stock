@@ -12,7 +12,12 @@ import (
 
 func main() {
 	messageText := "https://qiita.com/sayama0402/items/e32814e38375fafa919a"
-	parseUrl, _ := url.Parse(messageText)
+
+	// LINEで転送された際にメッセージ冒頭に改行が入るため削除
+	messageTextRemovedNewLine := strings.ReplaceAll(messageText, "\n", "")
+
+	// urlチェック
+	parseUrl, _ := url.Parse(messageTextRemovedNewLine)
 	inputUrl := strings.Join(strings.Fields(parseUrl.String()), "")
 
 	res, err := http.Get(inputUrl)

@@ -55,12 +55,16 @@ func handler(request events.APIGatewayProxyRequest) {
 
 // パラメータのURLでcurlを叩き、サイトのタイトルを取得&返却
 func httpGetUrl(messageText string) string {
-	parseUrl, _ := url.Parse(messageText)
+	// LINEで転送された際にメッセージ冒頭に改行が入るため削除
+	messageTextRemovedNewLine := strings.ReplaceAll(messageText, "\n", "")
+
+	// urlチェック
+	parseUrl, _ := url.Parse(messageTextRemovedNewLine)
 	inputUrl := strings.Join(strings.Fields(parseUrl.String()), "")
 
 	res, err := http.Get(inputUrl)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatal("Unexpected http.Get:", err)
 	}
 	defer res.Body.Close()
 
@@ -93,14 +97,14 @@ func httpGetUrl(messageText string) string {
 func postNotionApiStockArticle(siteTitle string, url string) bool {
 	jsonBody, err := os.ReadFile("postNotionApiStockArticleRequest.json")
 	if err != nil {
-		fmt.Println(err)
+		log.Fatal("Unexpected os.ReadFile():", err)
 	}
 	relacedJsonBody := replaceParameter(string(jsonBody), siteTitle, url)
 
 	body := strings.NewReader(string(relacedJsonBody))
 	req, err := http.NewRequest("POST", "https://api.notion.com/v1/pages", body)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatal("Unexpected http.NewRequest():", err)
 	}
 	req.Header.Set("Authorization", "Bearer "+os.Getenv("NOTION_KEY"))
 	req.Header.Set("Content-Type", "application/json")
@@ -109,7 +113,7 @@ func postNotionApiStockArticle(siteTitle string, url string) bool {
 	client := &http.Client{}
 	response, err := client.Do(req)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatal("Unexpected client.Do():", err)
 	}
 	defer response.Body.Close()
 
