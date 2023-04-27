@@ -79,7 +79,7 @@ func httpGetUrl(messageText string) string {
 
 	byteArray, err := io.ReadAll(res.Body)
 	if err != nil {
-		fmt.Println(err)
+		log.Fatal("Unread response body:", err)
 	}
 
 	siteTitle := ""
@@ -138,11 +138,11 @@ func replaceParameter(jsonBody, content, url string) string {
 func postLineMessage(userid string, text string) {
 	bot, err := linebot.New(os.Getenv("CHANNEL_SECRET"), os.Getenv("CHANNEL_TOKEN"))
 	if err != nil {
-		fmt.Println(err)
+		log.Fatal("Fatal linebot Instanse:", err)
 	}
 
 	if _, err := bot.PushMessage(userid, linebot.NewTextMessage(text)).Do(); err != nil {
-		fmt.Println(err)
+		log.Fatal("Fatal PushMessage:", err)
 	}
 }
 
