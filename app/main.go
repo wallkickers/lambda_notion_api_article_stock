@@ -72,10 +72,10 @@ func httpGetUrl(messageText string) string {
 		log.Fatal("Unexpected Statuscode:", res.StatusCode)
 	}
 
-	contentType := res.Header.Get("Content-Type")
-	if !(strings.Contains(contentType, "utf") || (strings.Contains(contentType, "UTF"))) {
-		log.Fatal("Unexpected Content-Type:", contentType)
-	}
+	// contentType := res.Header.Get("Content-Type")
+	// if !(strings.Contains(contentType, "utf") || (strings.Contains(contentType, "UTF"))) {
+	// 	log.Fatal("Unexpected Content-Type:", contentType)
+	// }
 
 	byteArray, err := io.ReadAll(res.Body)
 	if err != nil {
