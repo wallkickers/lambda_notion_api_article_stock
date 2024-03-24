@@ -31,69 +31,6 @@ type PostNotionApiStockArticleRequestData struct {
 }
 
 func main() {
-	// TODO: structを用いたbody
-	// data := PostNotionApiStockArticleRequestData{
-	// 	Parent: struct {
-	// 		DatabaseID string
-	// 	}{
-	// 		DatabaseID: "NOTION_DATABASE_ID",
-	// 	},
-	// 	Properties: struct {
-	// 		Title struct {
-	// 			Title []struct {
-	// 				Text struct {
-	// 					Content string `json:"content"`
-	// 				} `json:"text"`
-	// 			} `json:"title"`
-	// 		} `json:"title"`
-	// 		Status struct {
-	// 			Select struct {
-	// 				Name string `json:"name"`
-	// 			} `json:"select"`
-	// 		} `json:"status"`
-	// 		URL struct {
-	// 			Url string `json:"URL"`
-	// 		} `json:"URL"`
-	// 	}{
-	// 		Title: struct {
-	// 			Title []struct {
-	// 				Text struct {
-	// 					Content string `json:"content"`
-	// 				} `json:"text"`
-	// 			} `json:"title"`
-	// 		}{
-	// 			Title: []struct {
-	// 				Text struct {
-	// 					Content string `json:"content"`
-	// 				} `json:"text"`
-	// 			}{
-	// 				{
-	// 					Text: struct {
-	// 						Content string `json:"content"`
-	// 					}{
-	// 						Content: "content",
-	// 					},
-	// 				},
-	// 			},
-	// 		},
-	// 		Status: struct {
-	// 			Select struct {
-	// 				Name string `json:"name"`
-	// 			} `json:"select"`
-	// 		}{
-	// 			Select: struct {
-	// 				Name string `json:"name"`
-	// 			}{
-	// 				Name: "name",
-	// 			},
-	// 		},
-	// 		URL: struct {
-	// 			Url string `json:"URL"`
-	// 		}{
-	// 			Url: "url",
-	// 		},
-	// 	},
-	// }
 	jsonBody, err := os.ReadFile("postNotionApiStockArticleRequest.json")
 	if err != nil {
 		fmt.Println(err)
