@@ -1,6 +1,10 @@
 # これは何か？
 LINE経由でNotionにサイトの情報を保存しておくことができるLINEBotです。
 
+# 環境構築
+1. env/sample_.envファイルをenv/.envとしてコピーorリネームする
+1. envディレクトリ配下で`docker-compose up -d`
+
 # ビルド方法
 ```
 GOOS=linux go build main.go
@@ -23,3 +27,13 @@ appディレクトリ内のファイルを1つのzipファイルに圧縮してl
 # その他開発メモ
 - パッケージをインストールする  
 `go get -u "github.com/line/line-bot-sdk-go/linebot"`
+
+- main.go以外のgoファイルについて
+    - 動作確認用のgoファイル。中身の処理はmain.goにコピペされている。
+    - 実行はコンテナに入って、`go run ~.go`で実行可能
+        - curlUrl.go
+            - 指定されたURLからtitileタグの文字列をprintする
+            - 想定通りのtitle文字列が取得できるか、取得できない場合の処理を記述
+        - postNotionApiStockArticle.go
+            - NotionのAPIを実行してリクエストした内容を保存する
+            - リクエストのテンプレートは同ディレクトリのjsonファイル
